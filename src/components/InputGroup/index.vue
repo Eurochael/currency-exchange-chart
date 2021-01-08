@@ -22,6 +22,16 @@
       </option>
     </select>
 
+    <select id="to" class="input input-currency" v-model="currencyCodeTo2">
+      <option
+        v-for="currency in currenciesOptions"
+        :key="currency.code"
+        :value="currency.code"
+      >
+        {{ currency.code + " - " + currency.description }}
+      </option>
+    </select>    
+
     <label for="date">Initial date:</label>
     <input
       type="date"
@@ -58,13 +68,15 @@ export default {
     ...mapActions(["getCurrenciesOptions", "getCurrencyRates"]),
 
     handleGetCurrencyRates() {
-      const { currencyCodeFrom, currencyCodeTo, startDate } = this;
+      const { currencyCodeFrom, 
+      currencyCodeTo, currencyCodeTo2, startDate } = this;
 
       this.getCurrencyRates({
         from: currencyCodeFrom,
         to: currencyCodeTo,
+        to2: currencyCodeTo2,
         startDate,
-      });
+      });         
     },
   },
 
@@ -79,6 +91,16 @@ export default {
         return this.$store.state.currencyCode.to;
       },
     },
+
+    currencyCodeTo2: {
+      set(newValue) {
+        this.$store.commit("setCurrencyCode2", { newValue, key: "to" });
+      },
+      get() {
+        return this.$store.state.currencyCode2.to;
+      },
+    },    
+
     currencyCodeFrom: {
       set(newValue) {
         this.$store.commit("setCurrencyCode", { newValue, key: "from" });
@@ -87,6 +109,7 @@ export default {
         return this.$store.state.currencyCode.from;
       },
     },
+
     startDate: {
       set(newValue) {
         this.$store.commit("setStartDate", newValue);

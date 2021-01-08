@@ -2,9 +2,12 @@
   <div id="app">
     <h1 class="title">Currency Exchange Chart</h1>
     <InputGroup />
+    
 
     <div class="chart-container">
       <LineChart v-if="!onLoading && chartData" :chartData="chartData" />
+      <LoadingView :state="onLoading" />
+      <LineChart v-if="!onLoading && chartData" :chartData="chartData2" />
       <LoadingView :state="onLoading" />
     </div>
   </div>
@@ -18,7 +21,7 @@ export default {
   name: "App",
   components: { InputGroup, LineChart, LoadingView },
   computed: {
-    ...mapState(["chartData", "onLoading"]),
+    ...mapState(["chartData", "chartData2", "onLoading"]),
   },
 };
 </script>

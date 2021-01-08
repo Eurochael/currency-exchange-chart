@@ -15,6 +15,7 @@ export default {
     }
   },
   async getRatesHistory({ from, to, startDate, endDate }) {
+    // console.log(to);
     try {
       const response = await api.get(
         `/timeseries?start_date=${startDate}&end_date=${endDate}&symbols=${to}&base=${from}&places=3`,
